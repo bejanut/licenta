@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/cubit/app_cubit_states.dart';
 import 'package:flutter_cubit/cubit/app_cubits.dart';
 import 'package:flutter_cubit/pages/detail_page.dart';
-import 'package:flutter_cubit/pages/home_page.dart';
 import 'package:flutter_cubit/pages/navpages/main_page.dart';
 import 'package:flutter_cubit/pages/welcome_page.dart';
+
+import '../pages/signup.dart';
+import '../pages/test2_page.dart';
 
 class AppCubitLogics extends StatefulWidget {
   const AppCubitLogics({Key? key}) : super(key: key);
@@ -29,8 +31,10 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
             return MainPage();
           } else if (state is DetailState) {
             return DetailPage();
+          } else if (state is RegisterState) {
+            return TestPage();
           } else {
-            return Container();
+          return Container();
           }
         },
       ),

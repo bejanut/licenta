@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_cubit/model/data_model.dart';
+import 'package:flutter_cubit/model/product_preview_model.dart';
 import 'package:flutter_cubit/services/data_services.dart';
 import 'app_cubit_states.dart';
 
@@ -15,17 +15,21 @@ class AppCubits extends Cubit<CubitStates> {
     try {
       emit(LoadingState());
       places = await data.getInfo();
-      emit(LoadedState(places));
+      emit(LoadedState(places, 0));
     } catch(e) {
       print(e);
     }
   }
 
-  detailPage(DataModel data) {
+  detailPage(ProductPreviewModel data) {
     emit(DetailState(data));
   }
 
-  goHome() {
-    emit(LoadedState(places));
+  goHome(int index) {
+    emit(LoadedState(places, index));
+  }
+
+  registerPage() {
+    emit(RegisterState());
   }
 }

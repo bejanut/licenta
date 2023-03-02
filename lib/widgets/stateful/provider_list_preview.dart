@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/widgets/stateful/product_preview.dart';
 
+import '../../cubit/app_cubits.dart';
 import '../../model/data_model.dart';
 import '../../model/product_preview_model.dart';
 
@@ -60,27 +62,31 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
             Container(
               height: 250,
               width: double.maxFinite,
-              child: ListView.builder(
+              child: PageView.builder(
                 itemCount: providers.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
+                  final product = ProductPreviewModel(
+                      name: 'Produsul ' + index.toString(),
+                      imageLink: 'http://mark.bslmeiyu.com/uploads/' + providers[index].img,
+                      oldPrice: 20.67,
+                      newPrice: 7.86,
+                      finishHour: 2215,
+                      offersLeft: 6,
+                      description: 'Acest produs este foate bun si delicios',
+                      location: 'Strada Mare Nr. 20'
+                  );
+
                   return GestureDetector(
                       onTap: () {
-                        // BlocProvider.of<AppCubits>(context).detailPage(providers[index]);
-                        print('Product $index Clicked');
+                        BlocProvider.of<AppCubits>(context).detailPage(product);
+                        // print('Product $index Clicked');
                       },
                       child: Container (
-                        margin: const EdgeInsets.only(top: 10, left: 20),
+                        margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
                         width: 300,
                         height: 200,
-                        child: ProductPreview(productModel: new ProductPreviewModel(
-                            name: 'Produsul ' + index.toString(),
-                            imageLink: "http://mark.bslmeiyu.com/uploads/" + providers[index].img,
-                            oldPrice: 20.67,
-                            newPrice: 7.86,
-                            finishHour: 2215,
-                            offersLeft: 6
-                        )),
+                        child: ProductPreview(productModel: product),
                       )
                   );
                 },

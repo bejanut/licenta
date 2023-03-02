@@ -1,11 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../small_widgets/simple_button.dart';
+import '../cubit/app_cubit_states.dart';
+import '../cubit/app_cubits.dart';
+import '../widgets/stateless/simple_button.dart';
 
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -22,76 +21,85 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Stack(
+        body: BlocBuilder<AppCubits, CubitStates>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(15, 110, 0, 0),
-                    child: const Text("SignUp",
-                      style: TextStyle(
-                          fontSize: 40, fontWeight: FontWeight.bold
-                      ),),
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.fromLTRB(15, 110, 0, 0),
+                          child: const Text("SignUp",
+                            style: TextStyle(
+                                fontSize: 40, fontWeight: FontWeight.bold
+                            ),),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 35, left: 20, right: 30),
+                    child: Column(
+                      children: <Widget>[
+                        TextField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(
+                              labelText: 'EMAIL',
+                              labelStyle: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey
+                              )
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        TextField(
+                          controller: _passwordController,
+                          decoration: const InputDecoration(
+                              labelText: 'PASSWORD',
+                              labelStyle: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey
+                              )
+                          ),
+                          obscureText: true,
+                        ),
+                        SizedBox(height: 40,),
+                        Container(
+                            width: double.infinity,
+                            child: SimpleRoundedButton(
+                              fontSize: 18,
+                              text: 'Register',
+                              onPressed: () =>
+                              {
+                                print('Pressed ' + _emailController.text + ' ' +
+                                    _passwordController.text)
+                              },
+                              height: 50,
+                            )
+                        ),
+                        SizedBox(height: 15,),
+                        Container(
+                            width: double.infinity,
+                            child: SimpleRoundedButton(
+                              fontSize: 18,
+                              text: 'Go Back',
+                              onPressed: () =>
+                              {
+                                BlocProvider.of<AppCubits>(context).goHome(3)
+                              },
+                              height: 50,
+                            )
+                        ),
+                      ],
+                    ),
                   )
                 ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 35, left: 20, right: 30),
-              child: Column(
-                children: <Widget>[
-                  TextField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(
-                        labelText: 'EMAIL',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey
-                        )
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  TextField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                        labelText: 'PASSWORD',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey
-                        )
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 40,),
-                  Container(
-                      width: double.infinity,
-                      child: SimpleRoundedButton(
-                        fontSize: 18,
-                        text: 'Register',
-                        onPressed: () => {
-                          print('Pressed ' + _emailController.text + ' ' + _passwordController.text)
-                        },
-                        height: 50,
-                      )
-                  ),
-                  SizedBox(height: 15,),
-                  Container(
-                      width: double.infinity,
-                      child: SimpleRoundedButton(
-                        fontSize: 18,
-                        text: 'Go Back',
-                        onPressed: () => {Navigator.of(context).pop()},
-                        height: 50,
-                      )
-                  ),
-                ],
-              ),
-            )
-          ],
+              );
+            }
         )
     );
   }

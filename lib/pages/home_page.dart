@@ -39,7 +39,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   padding: const EdgeInsets.only(top: 60, left: 20, right: 20),
                   child: Row(
                     children: [
-                      Icon(Icons.menu, size: 30, color: Colors.black54),
+                      IconButton(
+                        icon: Icon(Icons.menu, size: 30, color: Colors.black54),
+                        onPressed: () => {
+                          BlocProvider.of<AppCubits>(context).registerPage()
+                        },
+                      ),
                       Expanded(child: Container()),
                       Icon(Icons.shopping_cart, size: 30, color: Colors.black54),
                     ],

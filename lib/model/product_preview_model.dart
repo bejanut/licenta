@@ -1,6 +1,8 @@
 class ProductPreviewModel {
   String name;
   String imageLink;
+  String description;
+  String location;
   double oldPrice;
   double newPrice;
   int finishHour;
@@ -9,6 +11,8 @@ class ProductPreviewModel {
   ProductPreviewModel({
     required this.name,
     required this.imageLink,
+    required this.description,
+    required this.location,
     required this.oldPrice,
     required this.newPrice,
     required this.finishHour,
@@ -19,6 +23,8 @@ class ProductPreviewModel {
     return ProductPreviewModel(
         name: json["product_name"],
         imageLink: json["img_link"],
+        description: json["description"],
+        location: json["location"],
         oldPrice: json["old_price"],
         newPrice: json["new_price"],
         finishHour: json["finish_hour"],

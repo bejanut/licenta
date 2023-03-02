@@ -6,9 +6,9 @@ import 'package:flutter_cubit/cubit/app_cubits.dart';
 import 'package:flutter_cubit/widgets/stateless/app_buttons.dart';
 import 'package:flutter_cubit/widgets/stateless/app_large_text.dart';
 import 'package:flutter_cubit/widgets/stateless/app_text.dart';
-import 'package:flutter_cubit/widgets/stateless/responsive_button.dart';
 
 import '../misc/colors.dart';
+import '../widgets/stateless/simple_button.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       DetailState detail = state as DetailState;
-      int gottenStars = detail.place.stars;
+      int gottenStars = 4;
 
       return Scaffold(
         body: Container(
@@ -40,7 +40,7 @@ class _DetailPageState extends State<DetailPage> {
                     height: 350,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          image:  NetworkImage("http://mark.bslmeiyu.com/uploads/" + detail.place.img),
+                          image:  NetworkImage(detail.product.imageLink),
                           fit: BoxFit.cover
                       ),
                     ),
@@ -48,12 +48,15 @@ class _DetailPageState extends State<DetailPage> {
               Positioned(
                   left: 20,
                   top: 70,
+                  right: 20,
                   child: Row(
                     children: [
                       IconButton(onPressed: () {
-                        BlocProvider.of<AppCubits>(context).goHome();
-                      }, icon: Icon(Icons.menu),
+                        BlocProvider.of<AppCubits>(context).goHome(0);
+                      }, icon: Icon(Icons.arrow_back_ios),
                           color: Colors.white),
+                      Expanded(child: Container()),
+                      Icon(Icons.shopping_cart, size: 30, color: Colors.white),
                     ],
                   )),
               Positioned(
@@ -75,8 +78,29 @@ class _DetailPageState extends State<DetailPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            AppLargeText(text: detail.place.name, color: Colors.black.withOpacity(0.8)),
-                            AppLargeText(text: "\$ " + detail.place.price.toString(), color: AppColors.mainColor)
+                            AppLargeText(text: detail.product.name, color: Colors.black.withOpacity(0.8)),
+                            Row(
+                                children: [
+                                  Text(
+                                    state.product.oldPrice.toString(),
+                                    style: TextStyle(
+                                        color: Colors.red.withOpacity(0.8),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.lineThrough
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    state.product.newPrice.toString() + ' LEI',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ]
+                            )
                           ],
                         ),
                         SizedBox(height: 10),
@@ -84,50 +108,81 @@ class _DetailPageState extends State<DetailPage> {
                           children: [
                             Icon(Icons.location_on, color: AppColors.mainColor),
                             SizedBox(width: 5),
-                            AppText(text: detail.place.location, color: AppColors.textColor1)
+                            AppText(text: detail.product.location, color: AppColors.textColor1)
                           ],),
-                        SizedBox(height: 20),
-                        Row(
+                        SizedBox(height: 25),
+                        AppLargeText(text: "Availability", color: Colors.black.withOpacity(0.8), size: 20),
+                        SizedBox(height: 10),
+                        Column (
                             children: [
-                              Wrap(
-                                children: List.generate(5, (index) {
-                                  return Icon(Icons.star, color: gottenStars <= index ? AppColors.textColor2 : AppColors.starColor);
-                                }),
+                              // Offer End Time
+                              Row (
+                                  children: [
+                                    Icon(Icons.access_time, size: 16, color: AppColors.mainTextColor),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      'Ends at: ' + state.product.getFinishHour(),
+                                      style: TextStyle(
+                                        color: AppColors.mainTextColor,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ]
                               ),
-                              SizedBox(width: 10),
-                              AppText(text: "(${gottenStars}.0)", color: AppColors.textColor2),
+                              SizedBox(height: 5),
+                              // Number of offers remaining
+                              Row (
+                                  children: [
+                                    Icon(Icons.fastfood_rounded, size: 16, color: AppColors.mainTextColor),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      'Offers left: ' + state.product.offersLeft.toString(),
+                                      style: TextStyle(
+                                        color: AppColors.mainTextColor,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ]
+                              ),
                             ]
                         ),
-                        SizedBox(height: 25),
-                        AppLargeText(text: "People", color: Colors.black.withOpacity(0.8), size: 20),
-                        SizedBox(height: 5),
-                        AppText(text: "Number of people in your group", color: AppColors.mainTextColor),
                         SizedBox(height: 10),
-                        Wrap(
-                          children: List.generate(5, (index) {
-                            return InkWell(
-                              onTap: () {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(right: 10),
-                                child: AppButtons(
-                                  size: 50,
-                                  color: selectedIndex == index ? Colors.white : Colors.black,
-                                  backgroudColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
-                                  borderColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
-                                  text: (index + 1).toString(),
-                                ),
-                              ),
-                            );
-                          }),
-                        ),
+                        // Row(
+                        //     children: [
+                        //       Wrap(
+                        //         children: List.generate(5, (index) {
+                        //           return Icon(Icons.star, color: gottenStars <= index ? AppColors.textColor2 : AppColors.starColor);
+                        //         }),
+                        //       ),
+                        //       SizedBox(width: 10),
+                        //       AppText(text: "(${gottenStars}.0)", color: AppColors.textColor2),
+                        //     ]
+                        // ),
+                        // Wrap(
+                        //   children: List.generate(5, (index) {
+                        //     return InkWell(
+                        //       onTap: () {
+                        //         setState(() {
+                        //           selectedIndex = index;
+                        //         });
+                        //       },
+                        //       child: Container(
+                        //         margin: EdgeInsets.only(right: 10),
+                        //         child: AppButtons(
+                        //           size: 50,
+                        //           color: selectedIndex == index ? Colors.white : Colors.black,
+                        //           backgroudColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
+                        //           borderColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
+                        //           text: (index + 1).toString(),
+                        //         ),
+                        //       ),
+                        //     );
+                        //   }),
+                        // ),
                         SizedBox(height: 30),
                         AppLargeText(text: "Description", color: Colors.black.withOpacity(0.8), size: 20),
                         SizedBox(height: 10),
-                        AppText(text: detail.place.description, color: AppColors.mainTextColor),
+                        AppText(text: detail.product.description, color: AppColors.mainTextColor),
                       ],
                     ),
                   )),
@@ -146,7 +201,16 @@ class _DetailPageState extends State<DetailPage> {
                         icon: Icons.favorite_border,
                       ),
                       SizedBox(width: 20),
-                      ResponsiveButton(isResponsive: true)
+                      Expanded(
+                        child: SimpleRoundedButton(
+                          fontSize: 18,
+                          text: 'Add to cart',
+                          onPressed: () => {
+                            print('Add to cart')
+                          },
+                          height: 50,
+                        ),
+                      )
                     ],
                   )
               )
