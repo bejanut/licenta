@@ -1,39 +1,35 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_cubit/model/provider_model.dart';
 
-import '../model/data_model.dart';
 import '../model/product_preview_model.dart';
 
 abstract class CubitStates extends Equatable {}
 
 class InitialState extends CubitStates {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 
 }
 
 class WelcomeState extends CubitStates {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 
 }
 
 class LoadingState extends CubitStates {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 
 }
 
 class LoadedState extends CubitStates {
-  LoadedState(this.places, this.index);
-  final List<DataModel> places;
+  LoadedState(this.providers, this.index);
+  final List<ProviderModel> providers;
   int index;
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [places, index];
+  List<Object?> get props => [providers, index];
 
 }
 
@@ -42,14 +38,12 @@ class DetailState extends CubitStates {
   final ProductPreviewModel product;
 
   @override
-  // TODO: implement props
   List<Object?> get props => [product];
 
 }
 
 class RegisterState extends CubitStates {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 
 }

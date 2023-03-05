@@ -2,26 +2,30 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../model/data_model.dart';
+import '../model/provider_model.dart';
 
 class DataServices {
-  String baseUrl = "http://mark.bslmeiyu.com/api";
+  String baseUrl = "http://127.0.0.1:5000";
 
-  Future<List<DataModel>> getInfo() async {
-    var apiUrl = '/getplaces';
-    http.Response res = await http.get(Uri.parse(baseUrl + apiUrl));
+  Future<List<ProviderModel>> getInfo() async {
+    const apiUrl = "http://127.0.0.1:5000/providers";
+    http.Response res = await http.get(Uri.parse(apiUrl), headers: {
+      "Access-Control-Allow-Origin": "*",
+      'Content-Type': 'application/json',
+      'Accept': '*/*'
+    });
 
     try {
       if (res.statusCode == 200) {
         List<dynamic> list = json.decode(res.body);
 
-        return list.map((e) => DataModel.fromJson(e)).toList();
+        return list.map((e) => ProviderModel.fromJson(e)).toList();
       }
 
-      return <DataModel>[];
+      return <ProviderModel>[];
     } catch (e) {
       print(e);
-      return <DataModel>[];
+      return <ProviderModel>[];
     }
   }
 }

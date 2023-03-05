@@ -15,13 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  var images = {
-    "balloning.png": "Balloning",
-    "hiking.png": "Hiking",
-    "kayaking.png": "Kayaking",
-    "snorkling.png": "Snorkling",
-  };
-
   @override
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this);
@@ -30,7 +23,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: BlocBuilder<AppCubits, CubitStates> (
         builder: (context, state) {
           if (state is LoadedState) {
-            var info = state.places;
+            var providers = state.providers;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -56,34 +49,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     margin: const EdgeInsets.only(left: 20),
                     child: AppLargeText(text: "Current Offers")),
                 SizedBox(height: 20),
-                //tabbar
-                // Container(
-                //     child: Container(
-                //       alignment: Alignment.centerLeft,
-                //       child: TabBar(
-                //           labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                //           controller: _tabController,
-                //           labelColor: Colors.black,
-                //           unselectedLabelColor: Colors.grey,
-                //           isScrollable: true,
-                //           indicatorSize: TabBarIndicatorSize.label,
-                //           indicator:
-                //           CircleTabIndicator(color: AppColors.mainColor, radius: 4),
-                //           tabs: [
-                //             Tab(text: "Places"),
-                //             Tab(text: "Inspiration"),
-                //             Tab(text: "Emotions"),
-                //           ]),
-                //     )),
                 Expanded(
                   child:Container(
                     height: double.maxFinite,
                     width: double.maxFinite,
                     child: ListView.builder(
-                        itemCount: 5,
+                        itemCount: providers.length,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
-                          return ProviderPreviewList(providers: info);
+                          return ProviderPreviewList(provider: providers[index]);
                         }
                     ),
                   ),
@@ -210,3 +184,24 @@ class _CirclePainter extends BoxPainter {
     canvas.drawCircle(offset + circleOffset, radius, _paint);
   }
 }
+
+
+//tabbar
+// Container(
+//     child: Container(
+//       alignment: Alignment.centerLeft,
+//       child: TabBar(
+//           labelPadding: const EdgeInsets.only(left: 20, right: 20),
+//           controller: _tabController,
+//           labelColor: Colors.black,
+//           unselectedLabelColor: Colors.grey,
+//           isScrollable: true,
+//           indicatorSize: TabBarIndicatorSize.label,
+//           indicator:
+//           CircleTabIndicator(color: AppColors.mainColor, radius: 4),
+//           tabs: [
+//             Tab(text: "Places"),
+//             Tab(text: "Inspiration"),
+//             Tab(text: "Emotions"),
+//           ]),
+//     )),

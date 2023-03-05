@@ -24,7 +24,6 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubits, CubitStates>(builder: (context, state) {
       DetailState detail = state as DetailState;
-      int gottenStars = 4;
 
       return Scaffold(
         body: Container(
@@ -82,7 +81,7 @@ class _DetailPageState extends State<DetailPage> {
                             Row(
                                 children: [
                                   Text(
-                                    state.product.oldPrice.toString(),
+                                    state.product.oldPrice.toStringAsFixed(2),
                                     style: TextStyle(
                                         color: Colors.red.withOpacity(0.8),
                                         fontSize: 20,
@@ -92,7 +91,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                   SizedBox(width: 10),
                                   Text(
-                                    state.product.newPrice.toString() + ' LEI',
+                                    state.product.newPrice.toStringAsFixed(2) + ' LEI',
                                     style: TextStyle(
                                       color: Colors.red,
                                       fontSize: 20,

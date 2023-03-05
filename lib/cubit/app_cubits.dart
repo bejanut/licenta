@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_cubit/model/product_model.dart';
 import 'package:flutter_cubit/model/product_preview_model.dart';
 import 'package:flutter_cubit/services/data_services.dart';
 import 'app_cubit_states.dart';
@@ -9,13 +10,15 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   final DataServices data;
-  late final places;
+  late final providers;
+  List<ProductModel> cartProducts = [];
+  List<ProductModel> favouriteProducts = [];
 
   void getData() async {
     try {
       emit(LoadingState());
-      places = await data.getInfo();
-      emit(LoadedState(places, 0));
+      providers = await data.getInfo();
+      emit(LoadedState(providers, 0));
     } catch(e) {
       print(e);
     }
@@ -26,7 +29,7 @@ class AppCubits extends Cubit<CubitStates> {
   }
 
   goHome(int index) {
-    emit(LoadedState(places, index));
+    emit(LoadedState(providers, index));
   }
 
   registerPage() {

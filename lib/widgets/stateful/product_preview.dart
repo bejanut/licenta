@@ -78,7 +78,7 @@ class ProductPreview extends StatelessWidget {
                   child: Row(
                       children: [
                         Text(
-                          productModel.oldPrice.toString(),
+                          productModel.oldPrice.toStringAsFixed(2),
                           style: TextStyle(
                               color: Colors.white.withOpacity(0.7),
                               fontSize: 16,
@@ -88,7 +88,7 @@ class ProductPreview extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          productModel.newPrice.toString() + ' LEI',
+                          productModel.newPrice.toStringAsFixed(2) + ' LEI',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cubit/model/provider_model.dart';
 import 'package:flutter_cubit/widgets/stateful/product_preview.dart';
 
 import '../../cubit/app_cubits.dart';
@@ -8,25 +9,18 @@ import '../../model/data_model.dart';
 import '../../model/product_preview_model.dart';
 
 class ProviderPreviewList extends StatefulWidget {
-  final List<DataModel> providers;
+  final ProviderModel provider;
 
-  const ProviderPreviewList({required this.providers, Key? key}) : super(key: key);
+  const ProviderPreviewList({required this.provider, Key? key}) : super(key: key);
 
   @override
   _ProviderPreviewListState createState() => _ProviderPreviewListState();
 }
 
 class _ProviderPreviewListState extends State<ProviderPreviewList> {
-  var images = {
-    "balloning.png": "Balloning",
-    "hiking.png": "Hiking",
-    "kayaking.png": "Kayaking",
-    "snorkling.png": "Snorkling",
-  };
-
   @override
   Widget build(BuildContext context) {
-    final List<DataModel> providers = widget.providers;
+    final ProviderModel provider = widget.provider;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 25,),
@@ -45,7 +39,7 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
                   child: Row(
                     children: [
                       Text(
-                          'Provider',
+                          provider.name,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 24,
@@ -63,24 +57,24 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
               height: 250,
               width: double.maxFinite,
               child: PageView.builder(
-                itemCount: providers.length,
+                itemCount: provider.products.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
+                  final currentProduct = provider.products[index];
                   final product = ProductPreviewModel(
-                      name: 'Produsul ' + index.toString(),
-                      imageLink: 'http://mark.bslmeiyu.com/uploads/' + providers[index].img,
-                      oldPrice: 20.67,
-                      newPrice: 7.86,
-                      finishHour: 2215,
-                      offersLeft: 6,
-                      description: 'Acest produs este foate bun si delicios',
-                      location: 'Strada Mare Nr. 20'
+                      name: currentProduct.name,
+                      imageLink: currentProduct.img,
+                      oldPrice: currentProduct.oldPrice,
+                      newPrice: currentProduct.newPrice,
+                      finishHour: provider.closingHours,
+                      offersLeft: currentProduct.left,
+                      description: currentProduct.description,//provider.products[index].description,
+                      location: provider.location
                   );
 
                   return GestureDetector(
                       onTap: () {
                         BlocProvider.of<AppCubits>(context).detailPage(product);
-                        // print('Product $index Clicked');
                       },
                       child: Container (
                         margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
