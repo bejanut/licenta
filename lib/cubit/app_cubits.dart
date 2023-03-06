@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_cubit/model/product_model.dart';
 import 'package:flutter_cubit/model/product_preview_model.dart';
+import 'package:flutter_cubit/model/provider_model.dart';
 import 'package:flutter_cubit/services/data_services.dart';
 import 'app_cubit_states.dart';
 
@@ -12,7 +13,7 @@ class AppCubits extends Cubit<CubitStates> {
   final DataServices data;
   late final providers;
   List<ProductModel> cartProducts = [];
-  List<ProductModel> favouriteProducts = [];
+  Map<int, ProviderModel> favouriteProviders = {};
 
   void getData() async {
     try {
@@ -22,6 +23,18 @@ class AppCubits extends Cubit<CubitStates> {
     } catch(e) {
       print(e);
     }
+  }
+
+  void addFavouriteProvider(ProviderModel provider) {
+    favouriteProviders[provider.id] = provider;
+  }
+
+  void removeFavouriteProvider(ProviderModel provider) {
+    favouriteProviders.remove(provider.id);
+  }
+
+  List<ProviderModel> getFavouriteProviders() {
+    return favouriteProviders.values.toList();
   }
 
   detailPage(ProductPreviewModel data) {
@@ -34,5 +47,13 @@ class AppCubits extends Cubit<CubitStates> {
 
   registerPage() {
     emit(RegisterState());
+  }
+
+  cartPage() {
+    emit(CartState(cartProducts));
+  }
+
+  providerPage(ProviderModel provider) {
+    emit(ProviderState(provider));
   }
 }

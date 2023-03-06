@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/model/provider_model.dart';
 import 'package:flutter_cubit/widgets/stateful/product_preview.dart';
+import 'package:flutter_cubit/widgets/stateful/toggle_button.dart';
+import 'package:marquee/marquee.dart';
 
 import '../../cubit/app_cubits.dart';
-import '../../model/data_model.dart';
+import '../../misc/colors.dart';
 import '../../model/product_preview_model.dart';
+import '../stateless/app_buttons.dart';
+import '../stateless/app_buttons_borderless.dart';
+import '../stateless/moving_text.dart';
 
 class ProviderPreviewList extends StatefulWidget {
   final ProviderModel provider;
@@ -38,13 +43,25 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
                   width: double.maxFinite,
                   child: Row(
                     children: [
-                      Text(
-                          provider.name,
-                          style: TextStyle(
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 300, maxHeight: 30),
+                        child: MovingText(
+                          text: provider.name,
+                          maxLength: 20,
+                          textStyle: const TextStyle(
                             color: Colors.black,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                          )
+                          ),
+                        ),
+                      ),
+                      ToggleButton(
+                        pressedFunction: () => {
+                          BlocProvider.of<AppCubits>(context).addFavouriteProvider(provider),
+                        },
+                        releaseFunction: () => {
+                          BlocProvider.of<AppCubits>(context).removeFavouriteProvider(provider),
+                        },
                       ),
                       Expanded(child: Container()),
                       Icon(Icons.arrow_forward_ios, size: 30, color: Colors.black54),

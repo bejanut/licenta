@@ -39,6 +39,7 @@ dependencies:
   equatable:
   http:
   image_picker:
+  marquee: ^2.2.3
 
 dev_dependencies:
   flutter_test:

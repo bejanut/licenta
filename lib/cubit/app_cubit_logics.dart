@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/cubit/app_cubit_states.dart';
 import 'package:flutter_cubit/cubit/app_cubits.dart';
+import 'package:flutter_cubit/pages/cart_page.dart';
 import 'package:flutter_cubit/pages/detail_page.dart';
 import 'package:flutter_cubit/pages/navpages/main_page.dart';
 import 'package:flutter_cubit/pages/welcome_page.dart';
 
 import '../pages/signup.dart';
-import '../pages/test2_page.dart';
 
 class AppCubitLogics extends StatefulWidget {
   const AppCubitLogics({Key? key}) : super(key: key);
@@ -24,15 +24,17 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
       body: BlocBuilder<AppCubits, CubitStates> (
         builder: (context, state) {
           if (state is WelcomeState) {
-            return WelcomePage();
+            return const WelcomePage();
           } else if (state is LoadingState) {
-            return Center(child: CircularProgressIndicator(),);
+            return const Center(child: CircularProgressIndicator());
           } else if (state is LoadedState) {
-            return MainPage();
+            return const MainPage();
           } else if (state is DetailState) {
-            return DetailPage();
+            return const DetailPage();
           } else if (state is RegisterState) {
-            return TestPage();
+            return const SignupPage();
+          } else if (state is CartState) {
+            return const CartPage();
           } else {
           return Container();
           }

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_cubit/model/provider_model.dart';
 
+import '../model/product_model.dart';
 import '../model/product_preview_model.dart';
 
 abstract class CubitStates extends Equatable {}
@@ -46,5 +47,21 @@ class RegisterState extends CubitStates {
   @override
   List<Object?> get props => [];
 
+}
+
+class CartState extends CubitStates {
+  CartState(this.products);
+  final List<ProductModel> products;
+
+  @override
+  List<Object?> get props => [products];
+}
+
+class ProviderState extends CubitStates {
+  ProviderState(this.provider);
+  final ProviderModel provider;
+
+  @override
+  List<Object?> get props => [provider];
 }
 

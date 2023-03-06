@@ -66,6 +66,7 @@ class ProductPreview extends StatelessWidget {
         Positioned(
             right: 10,
             bottom: 20,
+            // Add clickable price
             child: Container(
               height: 40,
               decoration :BoxDecoration(
