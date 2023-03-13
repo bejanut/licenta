@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/cubit/app_cubit_states.dart';
+import 'package:flutter_cubit/pages/favourite_page.dart';
 import 'package:flutter_cubit/pages/home_page.dart';
 import 'package:flutter_cubit/pages/navpages/search_page.dart';
 
@@ -18,7 +19,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List pages = [
     HomePage(),
-    BarItemPage(),
+    FavouritePage(),
     SearchPage(),
     LogInPage()
   ];
@@ -46,7 +47,7 @@ class _MainPageState extends State<MainPage> {
           elevation: 0,
           items: [
             BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
-            BottomNavigationBarItem(label: "Bar", icon: Icon(Icons.bar_chart_sharp)),
+            BottomNavigationBarItem(label: "Favorite", icon: Icon(Icons.favorite)),
             BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
             BottomNavigationBarItem(label: "My", icon: Icon(Icons.person))
           ],

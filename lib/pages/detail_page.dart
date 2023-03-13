@@ -145,40 +145,7 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                             ]
                         ),
-                        SizedBox(height: 10),
-                        // Row(
-                        //     children: [
-                        //       Wrap(
-                        //         children: List.generate(5, (index) {
-                        //           return Icon(Icons.star, color: gottenStars <= index ? AppColors.textColor2 : AppColors.starColor);
-                        //         }),
-                        //       ),
-                        //       SizedBox(width: 10),
-                        //       AppText(text: "(${gottenStars}.0)", color: AppColors.textColor2),
-                        //     ]
-                        // ),
-                        // Wrap(
-                        //   children: List.generate(5, (index) {
-                        //     return InkWell(
-                        //       onTap: () {
-                        //         setState(() {
-                        //           selectedIndex = index;
-                        //         });
-                        //       },
-                        //       child: Container(
-                        //         margin: EdgeInsets.only(right: 10),
-                        //         child: AppButtons(
-                        //           size: 50,
-                        //           color: selectedIndex == index ? Colors.white : Colors.black,
-                        //           backgroudColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
-                        //           borderColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
-                        //           text: (index + 1).toString(),
-                        //         ),
-                        //       ),
-                        //     );
-                        //   }),
-                        // ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 40),
                         AppLargeText(text: "Description", color: Colors.black.withOpacity(0.8), size: 20),
                         SizedBox(height: 10),
                         AppText(text: detail.product.description, color: AppColors.mainTextColor),

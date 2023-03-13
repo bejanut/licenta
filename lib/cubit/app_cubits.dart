@@ -27,10 +27,12 @@ class AppCubits extends Cubit<CubitStates> {
 
   void addFavouriteProvider(ProviderModel provider) {
     favouriteProviders[provider.id] = provider;
+    provider.isFavourite = true;
   }
 
   void removeFavouriteProvider(ProviderModel provider) {
     favouriteProviders.remove(provider.id);
+    provider.isFavourite = false;
   }
 
   List<ProviderModel> getFavouriteProviders() {

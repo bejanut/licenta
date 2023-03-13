@@ -8,6 +8,7 @@ import 'package:flutter_cubit/pages/detail_page.dart';
 import 'package:flutter_cubit/pages/navpages/main_page.dart';
 import 'package:flutter_cubit/pages/welcome_page.dart';
 
+import '../pages/provider_page.dart';
 import '../pages/signup.dart';
 
 class AppCubitLogics extends StatefulWidget {
@@ -35,6 +36,8 @@ class _AppCubitLogicsState extends State<AppCubitLogics> {
             return const SignupPage();
           } else if (state is CartState) {
             return const CartPage();
+          } else if (state is ProviderState) {
+            return const ProviderPage();
           } else {
           return Container();
           }

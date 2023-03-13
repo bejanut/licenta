@@ -5,7 +5,10 @@ import 'package:flutter_cubit/cubit/app_cubit_states.dart';
 import 'package:flutter_cubit/cubit/app_cubits.dart';
 import 'package:flutter_cubit/widgets/stateless/app_large_text.dart';
 
+import '../misc/colors.dart';
 import '../widgets/stateful/provider_list_preview.dart';
+import '../widgets/stateless/app_buttons.dart';
+import '../widgets/stateless/simple_button.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -50,94 +53,121 @@ class _CartPageState extends State<CartPage> with TickerProviderStateMixin {
                   height: double.maxFinite,
                   width: double.maxFinite,
                   child: ListView.builder(
-                      itemCount: cartState.products.length,
+                      itemCount: 4, //cartState.products.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(child: Text('Am produs'));
+                        return Container(
+                          padding: EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                Row(children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width - 170,
+                                    child: Column(children: [
+                                      Container(
+                                        width: double.maxFinite,
+                                        child: Text(
+                                          'Praline cu caramele',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        width: double.maxFinite,
+                                        child: Text(
+                                          '74.20 LEI - 5 pcs',
+                                          style: TextStyle(
+                                            color: AppColors.mainColor.withOpacity(0.8),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ))
+                                    ],),
+                                  ),
+                                  Expanded(child: Container()),
+                                  InkWell(
+                                      borderRadius: BorderRadius.circular(30),
+                                      splashColor: Colors.black,
+                                      onTap: () => {
+                                        print('Decrease')
+                                      },
+                                      child: Container(
+                                        width: 60,
+                                        height: 50,
+                                        padding: EdgeInsets.only(right: 10, left: 10),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(35),
+                                              bottomLeft: Radius.circular(35)
+                                          ),
+                                          color: AppColors.mainColor.withOpacity(0.9)
+                                        ),
+                                        child: Center(child:
+                                          Icon(Icons.remove, color: Colors.white, size: 35)
+                                        ),
+                                      ),
+                                  ),
+                                  SizedBox(width: 2),
+                                  InkWell(
+                                    borderRadius: BorderRadius.circular(30),
+                                    splashColor: Colors.black,
+                                    onTap: () => {
+                                      print('Increase')
+                                    },
+                                    child: Container(
+                                      width: 60,
+                                      height: 50,
+                                      padding: EdgeInsets.only(right: 10, left: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(35),
+                                            bottomRight: Radius.circular(35)
+                                        ),
+                                        color: AppColors.mainColor.withOpacity(0.9)
+                                      ),
+                                      child: Center(child:
+                                        Icon(Icons.add, color: Colors.white, size: 35,)
+                                      ),
+                                    ),
+                                  ),
+                                ],),
+                                SizedBox(height: 20),
+                                Row(children: [
+                                  Icon(Icons.access_time, color: AppColors.textColor2, size: 20),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    'Pick up the products between: 10:00 - 22:00',
+                                    style: TextStyle(
+                                      color: AppColors.textColor2,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                ],)
+                              ],
+                            ));
                       }
                   ),
                 ),
               ),
-              // Container(
-              //   padding: const EdgeInsets.only(left: 20),
-              //   height: 300,
-              //   width: double.maxFinite,
-              //   child: TabBarView(
-              //     controller: _tabController,
-              //     children: [
-              //       ListView.builder(
-              //         itemCount: info.length,
-              //         scrollDirection: Axis.horizontal,
-              //         itemBuilder: (BuildContext context, int index) {
-              //           return GestureDetector(
-              //             onTap: () {
-              //               BlocProvider.of<AppCubits>(context).detailPage(info[index]);
-              //             },
-              //             child: Container(
-              //               margin: const EdgeInsets.only(right: 15, top: 10),
-              //               width: 200,
-              //               height: 300,
-              //               decoration: BoxDecoration(
-              //                   borderRadius: BorderRadius.circular(20),
-              //                   color: Colors.white,
-              //                   image: DecorationImage(
-              //                       image: NetworkImage("http://mark.bslmeiyu.com/uploads/" + info[index].img),
-              //                       fit: BoxFit.cover)),
-              //             ),
-              //           );
-              //         },
-              //       ),
-              //       Text("There"),
-              //       Text("Bye")
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(height: 30),
-              // Container(
-              //   margin: const EdgeInsets.only(left: 20, right: 20),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       AppLargeText(text: "Explore more", size: 22),
-              //       AppText(text: "See all", color: AppColors.textColor1),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(height: 10),
-              // Container(
-              //   height: 120,
-              //   width: double.maxFinite,
-              //   margin: const EdgeInsets.only(left: 20),
-              //   child: ListView.builder(
-              //       itemCount: 4,
-              //       scrollDirection: Axis.horizontal,
-              //       itemBuilder: (_, index) {
-              //         return Container (
-              //           margin: const EdgeInsets.only(right: 30),
-              //           child: Column(
-              //             children: [
-              //               Container(
-              //                 width: 80,
-              //                 height: 80,
-              //                 decoration: BoxDecoration(
-              //                     borderRadius: BorderRadius.circular(20),
-              //                     color: Colors.white,
-              //                     image: DecorationImage(
-              //                         image: AssetImage("img/" + images.keys.elementAt(index)),
-              //                         fit: BoxFit.cover)),
-              //               ),
-              //               SizedBox(height: 10),
-              //               Container(
-              //                 child: AppText(
-              //                     text: images.values.elementAt(index),
-              //                     color: AppColors.textColor2
-              //                 ),
-              //               )
-              //             ],
-              //           ),
-              //         );
-              //       }),
-              // )
+              Container(
+                height: 100,
+                width: 500,
+                padding: EdgeInsets.all(5),
+                child: Center(
+                  child: AppButtons(
+                    text: 'Place Order',
+                    size: 60,
+                    color: AppColors.textColor1,
+                    backgroudColor: Colors.white,
+                    borderColor: AppColors.textColor1,
+                  ),
+                ),
+              )
             ],
           );
         },
@@ -145,55 +175,3 @@ class _CartPageState extends State<CartPage> with TickerProviderStateMixin {
     );
   }
 }
-
-class CircleTabIndicator extends Decoration {
-  final Color color;
-  double radius;
-
-  CircleTabIndicator({required this.color, required this.radius});
-
-  @override
-  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    return _CirclePainter(color: color, radius: radius);
-  }
-}
-
-class _CirclePainter extends BoxPainter {
-  final Color color;
-  double radius;
-
-  _CirclePainter({required this.color, required this.radius});
-
-  @override
-  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    Paint _paint = Paint();
-    _paint.color = color;
-    _paint.isAntiAlias = true;
-    final Offset circleOffset = Offset(
-        configuration.size!.width / 2 - radius / 2,
-        configuration.size!.height - radius);
-
-    canvas.drawCircle(offset + circleOffset, radius, _paint);
-  }
-}
-
-
-//tabbar
-// Container(
-//     child: Container(
-//       alignment: Alignment.centerLeft,
-//       child: TabBar(
-//           labelPadding: const EdgeInsets.only(left: 20, right: 20),
-//           controller: _tabController,
-//           labelColor: Colors.black,
-//           unselectedLabelColor: Colors.grey,
-//           isScrollable: true,
-//           indicatorSize: TabBarIndicatorSize.label,
-//           indicator:
-//           CircleTabIndicator(color: AppColors.mainColor, radius: 4),
-//           tabs: [
-//             Tab(text: "Places"),
-//             Tab(text: "Inspiration"),
-//             Tab(text: "Emotions"),
-//           ]),
-//     )),

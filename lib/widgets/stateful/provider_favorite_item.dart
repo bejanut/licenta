@@ -9,16 +9,21 @@ import '../../cubit/app_cubits.dart';
 import '../../model/product_preview_model.dart';
 import '../stateless/moving_text.dart';
 
-class ProviderPreviewList extends StatefulWidget {
+class ProviderFavouriteItem extends StatefulWidget {
   final ProviderModel provider;
+  final void Function(ProviderModel provider) removeItem;
 
-  const ProviderPreviewList({required this.provider, Key? key}) : super(key: key);
+  const ProviderFavouriteItem({
+    required this.removeItem,
+    required this.provider,
+    Key? key
+  }) : super(key: key);
 
   @override
-  _ProviderPreviewListState createState() => _ProviderPreviewListState();
+  _ProviderFavouriteItemState createState() => _ProviderFavouriteItemState();
 }
 
-class _ProviderPreviewListState extends State<ProviderPreviewList> {
+class _ProviderFavouriteItemState extends State<ProviderFavouriteItem> {
   @override
   Widget build(BuildContext context) {
     final ProviderModel provider = widget.provider;
@@ -29,10 +34,7 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
           children: [
             Container(
               child: InkWell(
-                onTap: () => {
-                  print('Clicked Provider'),
-                  BlocProvider.of<AppCubits>(context).providerPage(provider)
-                },
+                onTap: () => {print('Clicked Provider')},
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
@@ -54,14 +56,15 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
                           ),
                         ),
                       ),
-                      ToggleButton(
-                        pressedFunction: () => {
-                          BlocProvider.of<AppCubits>(context).addFavouriteProvider(provider),
-                        },
-                        releaseFunction: () => {
-                          BlocProvider.of<AppCubits>(context).removeFavouriteProvider(provider),
-                        },
-                        isPressed: provider.isFavourite
+                      InkWell(
+                          onTap: () => {
+                            BlocProvider.of<AppCubits>(context).removeFavouriteProvider(provider),
+                            widget.removeItem(provider),
+                          },
+                          child: Container(
+                              padding: const EdgeInsets.all(5),
+                              child: Icon(Icons.delete_outline, size: 30, color: Colors.black)
+                          )
                       ),
                       Expanded(child: Container()),
                       Icon(Icons.arrow_forward_ios, size: 30, color: Colors.black54),

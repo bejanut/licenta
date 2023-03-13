@@ -6,12 +6,14 @@ class ProviderModel {
   String location;
   int closingHours;
   List<ProductModel> products;
+  bool isFavourite;
 
   ProviderModel({
     required this.id,
     required this.name,
     required this.location,
     required this.closingHours,
+    required this.isFavourite,
     required this.products,
   });
 
@@ -24,7 +26,8 @@ class ProviderModel {
       name: json["name"],
       location: json["location"],
       closingHours: json["closingHours"],
-      products: products
+      isFavourite: json["isFavourite"] == 'true',
+      products: products,
     );
   }
 }
