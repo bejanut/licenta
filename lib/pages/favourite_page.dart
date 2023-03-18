@@ -42,7 +42,8 @@ class _FavouritePageState extends State<FavouritePage> with TickerProviderStateM
                           BlocProvider.of<AppCubits>(context).registerPage()
                         },
                       ),
-                      Expanded(child: Container()),
+                      Expanded(child: Center(
+                          child: AppLargeText(text: "Favourites"))),
                       IconButton(
                         icon: const Icon(Icons.shopping_cart, size: 30, color: Colors.black54),
                         onPressed: () => {
@@ -52,22 +53,21 @@ class _FavouritePageState extends State<FavouritePage> with TickerProviderStateM
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
-                //discover text
-                Container(
-                    margin: const EdgeInsets.only(left: 20),
-                    child: AppLargeText(text: "Favourite Providers")),
                 SizedBox(height: 20),
                 Expanded(
-                  child:Container(
-                    height: double.maxFinite,
-                    width: double.maxFinite,
-                    child: ListView.builder(
-                        itemCount: providers.length,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProviderFavouriteItem(provider: providers[index], removeItem: removeItem,);
-                        }
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: SizedBox(
+                        height: double.maxFinite,//based on your need
+                        width: double.maxFinite,
+                        child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: providers.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ProviderFavouriteItem(provider: providers[index], removeItem: removeItem,);
+                            }
+                        )
                     ),
                   ),
                 ),

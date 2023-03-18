@@ -47,110 +47,113 @@ class _CartPageState extends State<CartPage> with TickerProviderStateMixin {
                 ),
               ),
               SizedBox(height: 30),
-              //discover text
               Expanded(
-                child:Container(
-                  height: double.maxFinite,
-                  width: double.maxFinite,
-                  child: ListView.builder(
-                      itemCount: 4, //cartState.products.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          padding: EdgeInsets.all(20),
-                            child: Column(
-                              children: [
-                                Row(children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width - 170,
-                                    child: Column(children: [
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: SizedBox(
+                      height: double.maxFinite,//based on your need
+                      width: double.maxFinite,
+                      child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: 4, //cartState.products.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                                padding: EdgeInsets.all(20),
+                                child: Column(
+                                  children: [
+                                    Row(children: [
                                       Container(
-                                        width: double.maxFinite,
-                                        child: Text(
-                                          'Praline cu caramele',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                        width: MediaQuery.of(context).size.width - 170,
+                                        child: Column(children: [
+                                          Container(
+                                            width: double.maxFinite,
+                                            child: Text(
+                                              'Praline cu caramele',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          SizedBox(height: 10),
+                                          Container(
+                                              width: double.maxFinite,
+                                              child: Text(
+                                                '74.20 LEI - 5 pcs',
+                                                style: TextStyle(
+                                                  color: AppColors.mainColor.withOpacity(0.8),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ))
+                                        ],),
                                       ),
-                                      SizedBox(height: 10),
-                                      Container(
-                                        width: double.maxFinite,
-                                        child: Text(
-                                          '74.20 LEI - 5 pcs',
-                                          style: TextStyle(
-                                            color: AppColors.mainColor.withOpacity(0.8),
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
+                                      Expanded(child: Container()),
+                                      InkWell(
+                                        borderRadius: BorderRadius.circular(30),
+                                        splashColor: Colors.black,
+                                        onTap: () => {
+                                          print('Decrease')
+                                        },
+                                        child: Container(
+                                          width: 60,
+                                          height: 50,
+                                          padding: EdgeInsets.only(right: 10, left: 10),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(35),
+                                                  bottomLeft: Radius.circular(35)
+                                              ),
+                                              color: AppColors.mainColor.withOpacity(0.9)
                                           ),
-                                        ))
-                                    ],),
-                                  ),
-                                  Expanded(child: Container()),
-                                  InkWell(
-                                      borderRadius: BorderRadius.circular(30),
-                                      splashColor: Colors.black,
-                                      onTap: () => {
-                                        print('Decrease')
-                                      },
-                                      child: Container(
-                                        width: 60,
-                                        height: 50,
-                                        padding: EdgeInsets.only(right: 10, left: 10),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(35),
-                                              bottomLeft: Radius.circular(35)
-                                          ),
-                                          color: AppColors.mainColor.withOpacity(0.9)
-                                        ),
-                                        child: Center(child:
+                                          child: Center(child:
                                           Icon(Icons.remove, color: Colors.white, size: 35)
+                                          ),
                                         ),
                                       ),
-                                  ),
-                                  SizedBox(width: 2),
-                                  InkWell(
-                                    borderRadius: BorderRadius.circular(30),
-                                    splashColor: Colors.black,
-                                    onTap: () => {
-                                      print('Increase')
-                                    },
-                                    child: Container(
-                                      width: 60,
-                                      height: 50,
-                                      padding: EdgeInsets.only(right: 10, left: 10),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(35),
-                                            bottomRight: Radius.circular(35)
+                                      SizedBox(width: 2),
+                                      InkWell(
+                                        borderRadius: BorderRadius.circular(30),
+                                        splashColor: Colors.black,
+                                        onTap: () => {
+                                          print('Increase')
+                                        },
+                                        child: Container(
+                                          width: 60,
+                                          height: 50,
+                                          padding: EdgeInsets.only(right: 10, left: 10),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(35),
+                                                  bottomRight: Radius.circular(35)
+                                              ),
+                                              color: AppColors.mainColor.withOpacity(0.9)
+                                          ),
+                                          child: Center(child:
+                                          Icon(Icons.add, color: Colors.white, size: 35,)
+                                          ),
                                         ),
-                                        color: AppColors.mainColor.withOpacity(0.9)
                                       ),
-                                      child: Center(child:
-                                        Icon(Icons.add, color: Colors.white, size: 35,)
-                                      ),
-                                    ),
-                                  ),
-                                ],),
-                                SizedBox(height: 20),
-                                Row(children: [
-                                  Icon(Icons.access_time, color: AppColors.textColor2, size: 20),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    'Pick up the products between: 10:00 - 22:00',
-                                    style: TextStyle(
-                                      color: AppColors.textColor2,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ],)
-                              ],
-                            ));
-                      }
+                                    ],),
+                                    SizedBox(height: 20),
+                                    Row(children: [
+                                      Icon(Icons.access_time, color: AppColors.textColor2, size: 20),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        'Pick up the products between: 10:00 - 22:00',
+                                        style: TextStyle(
+                                          color: AppColors.textColor2,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ],)
+                                  ],
+                                ));
+                          }
+                      ),
                   ),
                 ),
               ),

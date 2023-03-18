@@ -50,22 +50,6 @@ class ProviderPage extends StatelessWidget {
               pinned: true,
               expandedHeight: MediaQuery.of(context).size.height * 0.5,
             ),
-            // SliverList(delegate: SliverChildListDelegate([
-            //   Container(
-            //     height: 900,
-            //     width: 100,
-            //     decoration: BoxDecoration(
-            //       color: Colors.deepOrange,
-            //       border: Border.all(color: Colors.black, width: 2.0)
-            //     ),
-            //     child: const Text(
-            //       'Scroll Me',
-            //       textAlign: TextAlign.center,
-            //       style: TextStyle(color: Colors.white),
-            //     ),
-            //   )
-            // ]),
-            // )
             SliverList(delegate:SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 final currentProduct = provider.products[index];

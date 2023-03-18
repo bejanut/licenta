@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           BlocProvider.of<AppCubits>(context).registerPage()
                         },
                       ),
-                      Expanded(child: Container()),
+                      Expanded(child: Center(child: AppLargeText(text: "Current Offers"))),
                       IconButton(
                         icon: const Icon(Icons.shopping_cart, size: 30, color: Colors.black54),
                         onPressed: () => {
@@ -48,22 +48,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
-                //discover text
-                Container(
-                    margin: const EdgeInsets.only(left: 20),
-                    child: AppLargeText(text: "Current Offers")),
                 SizedBox(height: 20),
                 Expanded(
-                  child:Container(
-                    height: double.maxFinite,
-                    width: double.maxFinite,
-                    child: ListView.builder(
-                        itemCount: providers.length,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ProviderPreviewList(provider: providers[index]);
-                        }
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: SizedBox(
+                        height: double.maxFinite,//based on your need
+                        width: double.maxFinite,
+                        child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: providers.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ProviderPreviewList(provider: providers[index]);
+                            }
+                        )
                     ),
                   ),
                 ),

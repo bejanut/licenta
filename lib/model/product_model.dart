@@ -1,10 +1,10 @@
 class ProductModel {
   String name;
   String img;
-  double oldPrice;
-  double newPrice;
+  num oldPrice;
+  num newPrice;
   String description;
-  int left;
+  num left;
 
   ProductModel({
     required this.name,

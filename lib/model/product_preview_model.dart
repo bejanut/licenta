@@ -3,10 +3,10 @@ class ProductPreviewModel {
   String imageLink;
   String description;
   String location;
-  double oldPrice;
-  double newPrice;
-  int finishHour;
-  int offersLeft;
+  num oldPrice;
+  num newPrice;
+  num finishHour;
+  num offersLeft;
 
   ProductPreviewModel({
     required this.name,

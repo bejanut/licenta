@@ -1,9 +1,9 @@
 class DataModel {
   String name;
   String img;
-  int price;
-  int people;
-  int stars;
+  num price;
+  num people;
+  num stars;
   String description;
   String location;
 
