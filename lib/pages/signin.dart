@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cubit/cubit/app_cubits.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
-import '../cubit/app_cubit_states.dart';
+import '../state/AppState.dart';
+import '../state/actions/change-user-page.dart';
 import '../widgets/stateless/simple_button.dart';
 
 
@@ -21,82 +21,85 @@ class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocBuilder<AppCubits, CubitStates> (
-          builder: (context, state) {
-            return  Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            child: Stack(
               children: <Widget>[
                 Container(
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.fromLTRB(15, 110, 0, 0),
-                        child: const Text("LogIn",
-                          style: TextStyle(
-                              fontSize: 40, fontWeight: FontWeight.bold
-                          ),),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 35, left: 20, right: 30),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: _emailController,
-                        decoration: const InputDecoration(
-                            labelText: 'EMAIL',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey
-                            )
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                      TextField(
-                        controller: _passwordController,
-                        decoration: const InputDecoration(
-                            labelText: 'PASSWORD',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey
-                            )
-                        ),
-                        obscureText: true,
-                      ),
-                      SizedBox(height: 40,),
-                      Container(
-                          width: double.infinity,
-                          child: SimpleRoundedButton(
-                            fontSize: 18,
-                            text: 'Register',
-                            onPressed: () => {
-                              print('Pressed ' + _emailController.text + ' ' + _passwordController.text),
-                              BlocProvider.of<AppCubits>(context).registerPage()
-                            },
-                            height: 50,
-                          )
-                      ),
-                      SizedBox(height: 15,),
-                      Container(
-                          width: double.infinity,
-                          child: SimpleRoundedButton(
-                            fontSize: 18,
-                            text: 'Go Back',
-                            onPressed: () => {'Go back'},
-                            height: 50,
-                          )
-                      ),
-                    ],
-                  ),
+                  padding: EdgeInsets.fromLTRB(15, 110, 0, 0),
+                  child: const Text("LogIn",
+                    style: TextStyle(
+                        fontSize: 40, fontWeight: FontWeight.bold
+                    ),),
                 )
               ],
-            );
-          },
-        )
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 35, left: 20, right: 30),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                      labelText: 'EMAIL',
+                      labelStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey
+                      )
+                  ),
+                ),
+                SizedBox(height: 20,),
+                TextField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
+                      labelText: 'PASSWORD',
+                      labelStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey
+                      )
+                  ),
+                  obscureText: true,
+                ),
+                SizedBox(height: 40,),
+                Container(
+                    width: double.infinity,
+                    child: SimpleRoundedButton(
+                      fontSize: 18,
+                      text: 'Log In',
+                      onPressed: () => {
+                        print('Pressed ' + _emailController.text + ' ' + _passwordController.text),
+                      },
+                      height: 50,
+                    )
+                ),
+                SizedBox(height: 15,),
+                Container(
+                  width: double.infinity,
+                  child: StoreConnector<AppState, DispatchFunc>(
+                    converter: (store) => () => store.dispatch(ChangeUserPage(UserPageStates.register)),
+                    builder: (_, goToLogIn) {
+                      return Container(
+                        width: double.infinity,
+                        child: SimpleRoundedButton(
+                          fontSize: 18,
+                          text: 'Register',
+                          onPressed: goToLogIn,
+                          height: 50,
+                        ),
+                      );
+                    }
+                  )
+                ),
+              ],
+            ),
+          )
+        ],
+      )
     );
   }
 }

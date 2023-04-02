@@ -30,4 +30,11 @@ class ProviderModel {
       products: products,
     );
   }
+
+  String getFinishHour() {
+    var hour = closingHours / 100;
+    var minute = closingHours % 100;
+
+    return hour.toInt().toString() + ':' + minute.toString();
+  }
 }

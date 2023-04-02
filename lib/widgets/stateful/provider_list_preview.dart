@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/model/provider_model.dart';
+import 'package:flutter_cubit/state/actions/change-page.dart';
+import 'package:flutter_cubit/state/actions/open-provider-page.dart';
+import 'package:flutter_cubit/state/actions/toggle-provider-favaourite.dart';
 import 'package:flutter_cubit/widgets/stateful/product_preview.dart';
 import 'package:flutter_cubit/widgets/stateful/toggle_button.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
-import '../../cubit/app_cubits.dart';
 import '../../model/product_preview_model.dart';
+import '../../state/AppState.dart';
+import '../../state/actions/open-product-page.dart';
 import '../stateless/moving_text.dart';
 
 class ProviderPreviewList extends StatefulWidget {
@@ -27,49 +31,57 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
       margin: const EdgeInsets.only(bottom: 25,),
       child: Column(
           children: [
-            Container(
-              child: InkWell(
-                onTap: () => {
-                  print('Clicked Provider'),
-                  BlocProvider.of<AppCubits>(context).providerPage(provider)
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  padding: const EdgeInsets.only(right: 20, left: 20),
-                  height: 50,
-                  width: double.maxFinite,
-                  child: Row(
-                    children: [
-                      Container(
-                        constraints: const BoxConstraints(maxWidth: 300, maxHeight: 30),
-                        child: MovingText(
-                          text: provider.name,
-                          maxLength: 20,
-                          textStyle: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+            StoreConnector<AppState, void Function(ProviderModel index)>(
+              converter: (store) => (provider) => store.dispatch(OpenProviderPageAction(provider)),
+              builder: (_, openProviderPage) {
+              return Container(
+            child: InkWell(
+              onTap: () => {
+                print('Clicked Provider'),
+                openProviderPage(provider)
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding: const EdgeInsets.only(right: 20, left: 20),
+                height: 50,
+                width: double.maxFinite,
+                child: Row(
+                  children: [
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 300, maxHeight: 30),
+                      child: MovingText(
+                        text: provider.name,
+                        maxLength: 20,
+                        textStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      ToggleButton(
-                        pressedFunction: () => {
-                          BlocProvider.of<AppCubits>(context).addFavouriteProvider(provider),
-                        },
-                        releaseFunction: () => {
-                          BlocProvider.of<AppCubits>(context).removeFavouriteProvider(provider),
-                        },
-                        isPressed: provider.isFavourite
-                      ),
-                      Expanded(child: Container()),
-                      Icon(Icons.arrow_forward_ios, size: 30, color: Colors.black54),
-                    ],
-                  ),
+                    ),
+                    StoreConnector<AppState, void Function(ProviderModel provider, bool isFavourite)>(
+                      converter: (store) => (provider, isFavourites) => store.dispatch(ToggleFavouriteStatus(provider, isFavourites)),
+                      builder: (_, toggleFavouriteStatus) {
+                        return ToggleButton(
+                          pressedFunction: () => {
+                            toggleFavouriteStatus(provider, true)
+                          },
+                          releaseFunction: () => {
+                          toggleFavouriteStatus(provider, false)
+                          },
+                          isPressed: provider.isFavourite
+                        );
+                    }),
+                    Expanded(child: Container()),
+                    Icon(Icons.arrow_forward_ios, size: 30, color: Colors.black54),
+                  ],
                 ),
               ),
             ),
+          );
+            }),
             Container(
               height: 250,
               width: double.maxFinite,
@@ -77,29 +89,21 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
                 itemCount: provider.products.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final currentProduct = provider.products[index];
-                  final product = ProductPreviewModel(
-                      name: currentProduct.name,
-                      imageLink: currentProduct.img,
-                      oldPrice: currentProduct.oldPrice,
-                      newPrice: currentProduct.newPrice,
-                      finishHour: provider.closingHours,
-                      offersLeft: currentProduct.left,
-                      description: currentProduct.description,//provider.products[index].description,
-                      location: provider.location
-                  );
+                  final product = provider.products[index];
 
-                  return GestureDetector(
-                      onTap: () {
-                        BlocProvider.of<AppCubits>(context).detailPage(product);
-                      },
-                      child: Container (
-                        margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
-                        width: 300,
-                        height: 200,
-                        child: ProductPreview(productModel: product),
-                      )
-                  );
+                  return StoreConnector<AppState, DispatchFunc>(
+                    converter: (store) => () => store.dispatch(OpenProductPageAction(product, provider)),
+                    builder: (_, goToDetailPage) {
+                      return GestureDetector(
+                        onTap: goToDetailPage,
+                        child: Container (
+                          margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
+                          width: 300,
+                          height: 200,
+                          child: ProductPreview(product: product, provider: provider),
+                        )
+                      );
+                  });
                 },
               ),
             ),

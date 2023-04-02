@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cubit/model/product_model.dart';
+import 'package:flutter_cubit/model/provider_model.dart';
 
 import '../../model/product_preview_model.dart';
 
 class ProductPreview extends StatelessWidget {
-  final ProductPreviewModel productModel;
-  const ProductPreview({required this.productModel, Key? key}) : super(key: key);
+  final ProductModel product;
+  final ProviderModel provider;
+  const ProductPreview({required this.product, required this.provider, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class ProductPreview extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
                 image: DecorationImage(
-                    image: NetworkImage(productModel.imageLink),
+                    image: NetworkImage(product.img),
                     fit: BoxFit.cover)),
           ),
         ),
@@ -32,7 +35,7 @@ class ProductPreview extends StatelessWidget {
             child: Container(
               width: 200,
               child: Text(
-                productModel.name,
+                product.name,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 26,
@@ -53,7 +56,7 @@ class ProductPreview extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  '-' + productModel.getDiscount() + '%',
+                  '-' + product.getDiscount() + '%',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -79,7 +82,7 @@ class ProductPreview extends StatelessWidget {
                   child: Row(
                       children: [
                         Text(
-                          productModel.oldPrice.toStringAsFixed(2),
+                          product.oldPrice.toStringAsFixed(2),
                           style: TextStyle(
                               color: Colors.white.withOpacity(0.7),
                               fontSize: 16,
@@ -89,7 +92,7 @@ class ProductPreview extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          productModel.newPrice.toStringAsFixed(2) + ' LEI',
+                          product.newPrice.toStringAsFixed(2) + ' LEI',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -118,7 +121,7 @@ class ProductPreview extends StatelessWidget {
                               Icon(Icons.access_time, size: 16, color: Colors.white),
                               SizedBox(width: 5),
                               Text(
-                                productModel.getFinishHour(),
+                                provider.getFinishHour(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -134,7 +137,7 @@ class ProductPreview extends StatelessWidget {
                               Icon(Icons.fastfood_rounded, size: 16, color: Colors.white),
                               SizedBox(width: 5),
                               Text(
-                                productModel.offersLeft.toString(),
+                                product.quantity.toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cubit/cubit/app_cubits.dart';
 import 'package:flutter_cubit/widgets/stateless/app_large_text.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import '../model/provider_model.dart';
+import '../state/AppState.dart';
+import '../state/actions/change-page.dart';
 import '../widgets/stateful/provider_favorite_item.dart';
 
 class FavouritePage extends StatefulWidget {
@@ -17,16 +18,8 @@ class FavouritePage extends StatefulWidget {
 class _FavouritePageState extends State<FavouritePage> with TickerProviderStateMixin {
   List<ProviderModel> providers = [];
 
-  void removeItem(ProviderModel provider) {
-    setState(() {
-      providers.remove(provider);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    providers = BlocProvider.of<AppCubits>(context).getFavouriteProviders();
-
     return Scaffold(
       body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,38 +32,44 @@ class _FavouritePageState extends State<FavouritePage> with TickerProviderStateM
                       IconButton(
                         icon: const Icon(Icons.menu, size: 30, color: Colors.black54),
                         onPressed: () => {
-                          BlocProvider.of<AppCubits>(context).registerPage()
+                          print('Pressed sth')
                         },
                       ),
                       Expanded(child: Center(
                           child: AppLargeText(text: "Favourites"))),
-                      IconButton(
-                        icon: const Icon(Icons.shopping_cart, size: 30, color: Colors.black54),
-                        onPressed: () => {
-                          BlocProvider.of<AppCubits>(context).cartPage()
-                        },
-                      ),
+                      StoreConnector<AppState, DispatchFunc>(
+                        converter: (store) => () => store.dispatch(ChangePageAction(PageTypes.cartPage)),
+                        builder: (_, goToCart) {
+                          return IconButton(
+                            icon: const Icon(Icons.shopping_cart, size: 30, color: Colors.black54),
+                            onPressed: goToCart,
+                          );
+                    })
                     ],
                   ),
                 ),
                 SizedBox(height: 20),
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: SizedBox(
-                        height: double.maxFinite,//based on your need
-                        width: double.maxFinite,
-                        child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: providers.length,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ProviderFavouriteItem(provider: providers[index], removeItem: removeItem,);
-                            }
-                        )
-                    ),
-                  ),
-                ),
+                StoreConnector<AppState, List<ProviderModel>>(
+                  converter: (store) => store.state.favouriteProviders.values.toList(),
+                  builder: (_, providers) {
+                    return Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: SizedBox(
+                            height: double.maxFinite,//based on your need
+                            width: double.maxFinite,
+                            child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: providers.length,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ProviderFavouriteItem(provider: providers[index]);
+                                }
+                            )
+                        ),
+                      ),
+                    );
+                })
               ],
             )
     );

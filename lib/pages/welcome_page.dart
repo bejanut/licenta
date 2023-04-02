@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/misc/colors.dart';
 import 'package:flutter_cubit/widgets/stateless/app_large_text.dart';
 import 'package:flutter_cubit/widgets/stateless/responsive_button.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
-import '../cubit/app_cubits.dart';
+import '../state/AppState.dart';
+import '../state/actions/thunk-get-info.dart';
 import '../widgets/stateless/app_text.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -39,49 +40,52 @@ class _WelcomePageState extends State<WelcomePage> {
                 fit: BoxFit.cover
               )
             ),
-            child: Container(
-              margin: const EdgeInsets.only(top:150, left: 20, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppLargeText(text: "Trips",),
-                      AppText(text: "Mountain", size: 30,),
-                      SizedBox(height: 20,),
-                      Container(
-                        width: 250,
-                        child: AppText(
-                          text: "Mountain hikes give you an incredible sense of freedom along with endurance test.",
-                          color: AppColors.textColor2),
-                      ),
-                      SizedBox(height: 20,),
-                      GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<AppCubits>(context).getData();
-                        },
-                        child: Container(
-                            width: 150,
-                            child: Row(children: [ResponsiveButton(width: 120)])),
+            child: StoreConnector<AppState, DispatchFunc>(
+                converter: (store) => () => store.dispatch(getInfo),
+                builder: (_, loadMainPage) {
+                  return Container(
+                      margin: const EdgeInsets.only(top:150, left: 20, right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppLargeText(text: "Trips",),
+                              AppText(text: "Mountain", size: 30,),
+                              SizedBox(height: 20,),
+                              Container(
+                                width: 250,
+                                child: AppText(
+                                    text: "Mountain hikes give you an incredible sense of freedom along with endurance test.",
+                                    color: AppColors.textColor2),
+                              ),
+                              SizedBox(height: 20,),
+                              GestureDetector(
+                                onTap: loadMainPage,
+                                child: Container(
+                                    width: 150,
+                                    child: Row(children: [ResponsiveButton(width: 120)])),
+                              )
+                            ],
+                          ),
+                          Column(
+                            children: List.generate(3, (indexDots) {
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 2),
+                                width: 8,
+                                height: index==indexDots ? 25 : 8,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: index==indexDots ? AppColors.mainColor : AppColors.mainColor.withOpacity(0.3)
+                                ),
+                              );
+                            }),
+                          )
+                        ],
                       )
-                    ],
-                  ),
-                  Column(
-                    children: List.generate(3, (indexDots) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 2),
-                        width: 8,
-                        height: index==indexDots ? 25 : 8,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: index==indexDots ? AppColors.mainColor : AppColors.mainColor.withOpacity(0.3)
-                        ),
-                      );
-                    }),
-                  )
-                ],
-              )
+                  );
+                }
             )
           );
       }),

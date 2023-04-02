@@ -1,20 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cubit/model/provider_model.dart';
 import 'package:flutter_cubit/widgets/stateful/product_preview.dart';
-import 'package:flutter_cubit/widgets/stateful/toggle_button.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
-import '../../cubit/app_cubits.dart';
 import '../../model/product_preview_model.dart';
+import '../../state/AppState.dart';
+import '../../state/actions/open-product-page.dart';
+import '../../state/actions/toggle-provider-favaourite.dart';
 import '../stateless/moving_text.dart';
 
 class ProviderFavouriteItem extends StatefulWidget {
   final ProviderModel provider;
-  final void Function(ProviderModel provider) removeItem;
 
   const ProviderFavouriteItem({
-    required this.removeItem,
     required this.provider,
     Key? key
   }) : super(key: key);
@@ -56,16 +55,17 @@ class _ProviderFavouriteItemState extends State<ProviderFavouriteItem> {
                           ),
                         ),
                       ),
-                      InkWell(
-                          onTap: () => {
-                            BlocProvider.of<AppCubits>(context).removeFavouriteProvider(provider),
-                            widget.removeItem(provider),
-                          },
-                          child: Container(
-                              padding: const EdgeInsets.all(5),
-                              child: Icon(Icons.delete_outline, size: 30, color: Colors.black)
-                          )
-                      ),
+                      StoreConnector<AppState, DispatchFunc>(
+                          converter: (store) => () => store.dispatch(ToggleFavouriteStatus(provider, false)),
+                          builder: (_, deleteFavourite) {
+                          return InkWell(
+                              onTap: deleteFavourite,
+                              child: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Icon(Icons.delete_outline, size: 30, color: Colors.black)
+                              )
+                          );
+                      }),
                       Expanded(child: Container()),
                       Icon(Icons.arrow_forward_ios, size: 30, color: Colors.black54),
                     ],
@@ -80,29 +80,21 @@ class _ProviderFavouriteItemState extends State<ProviderFavouriteItem> {
                 itemCount: provider.products.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final currentProduct = provider.products[index];
-                  final product = ProductPreviewModel(
-                      name: currentProduct.name,
-                      imageLink: currentProduct.img,
-                      oldPrice: currentProduct.oldPrice,
-                      newPrice: currentProduct.newPrice,
-                      finishHour: provider.closingHours,
-                      offersLeft: currentProduct.left,
-                      description: currentProduct.description,//provider.products[index].description,
-                      location: provider.location
-                  );
+                  final product = provider.products[index];
 
-                  return GestureDetector(
-                      onTap: () {
-                        BlocProvider.of<AppCubits>(context).detailPage(product);
-                      },
-                      child: Container (
-                        margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
-                        width: 300,
-                        height: 200,
-                        child: ProductPreview(productModel: product),
-                      )
-                  );
+                  return StoreConnector<AppState, DispatchFunc>(
+                    converter: (store) => () => store.dispatch(OpenProductPageAction(product, provider)),
+                    builder: (_, goToDetailPage) {
+                      return GestureDetector(
+                        onTap: goToDetailPage,
+                        child: Container (
+                          margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
+                          width: 300,
+                          height: 200,
+                          child: ProductPreview(product: product, provider: provider,),
+                        )
+                    );
+                  });
                 },
               ),
             ),

@@ -38,11 +38,6 @@ class ProductPreviewModel {
     return percent.toString();
   }
 
-  String getFinishHour() {
-    var hour = finishHour / 100;
-    var minute = finishHour % 100;
 
-    return hour.toInt().toString() + ':' + minute.toString();
-  }
 
 }

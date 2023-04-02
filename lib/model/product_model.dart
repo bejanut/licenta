@@ -4,7 +4,7 @@ class ProductModel {
   num oldPrice;
   num newPrice;
   String description;
-  num left;
+  num quantity;
 
   ProductModel({
     required this.name,
@@ -12,7 +12,7 @@ class ProductModel {
     required this.oldPrice,
     required this.newPrice,
     required this.description,
-    required this.left,
+    required this.quantity,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,13 @@ class ProductModel {
       oldPrice: json["oldPrice"],
       newPrice: json["newPrice"],
       description: json["description"],
-      left: json["left"]
+      quantity: json["left"]
     );
+  }
+
+  String getDiscount() {
+    var percent = ((oldPrice - newPrice) * 100 / oldPrice).round();
+
+    return percent.toString();
   }
 }

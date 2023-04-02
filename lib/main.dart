@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cubit/cubit/app_cubits.dart';
-import 'package:flutter_cubit/services/data_services.dart';
+import 'package:flutter_cubit/pages/app-logic.dart';
+import 'package:flutter_cubit/state/AppReducer.dart';
+import 'package:flutter_cubit/state/AppState.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
-import 'cubit/app_cubit_logics.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final store = Store(reducer,
+      initialState: AppState.initialState(),
+      middleware: [thunkMiddleware]);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+    return StoreProvider(
+      store: store,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
 
-        primarySwatch: Colors.blue,
-      ),
-      home: BlocProvider<AppCubits>(
-        create: (context) => AppCubits(
-          data: DataServices()
+          primarySwatch: Colors.blue,
         ),
-        child: AppCubitLogics(),
+        home: AppLogic(),
       )
     );
+
   }
 }
