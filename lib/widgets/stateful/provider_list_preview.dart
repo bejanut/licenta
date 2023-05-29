@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/model/provider_model.dart';
-import 'package:flutter_cubit/state/actions/change-page.dart';
 import 'package:flutter_cubit/state/actions/open-provider-page.dart';
 import 'package:flutter_cubit/state/actions/toggle-provider-favaourite.dart';
 import 'package:flutter_cubit/widgets/stateful/product_preview.dart';
 import 'package:flutter_cubit/widgets/stateful/toggle_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import '../../model/product_preview_model.dart';
 import '../../state/AppState.dart';
 import '../../state/actions/open-product-page.dart';
 import '../stateless/moving_text.dart';

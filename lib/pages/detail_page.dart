@@ -119,7 +119,7 @@ class _DetailPageState extends State<DetailPage> {
                           children: [
                             Icon(Icons.location_on, color: AppColors.mainColor),
                             SizedBox(width: 5),
-                            AppText(text: details.provider.location, color: AppColors.textColor1)
+                            AppText(text: details.provider.address, color: AppColors.textColor1)
                           ],),
                         SizedBox(height: 25),
                         AppLargeText(text: "Availability", color: Colors.black.withOpacity(0.8), size: 20),
@@ -165,22 +165,51 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                   )),
               Positioned(
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                  child: StoreConnector<AppState, void Function(ProductModel product)>(
-                    converter: (store) => (product) => store.dispatch(AddProductToCart(product)),
-                    builder: (_, addProduct) {
-                      return Container(
-                        child: SimpleRoundedButton(
-                          fontSize: 18,
-                          text: 'Add to cart',
-                          onPressed: () => {
-                            addProduct(details.product)
-                          },
-                          height: 50,
-                        ),
-                  );
+                bottom: 20,
+                left: 20,
+                right: 20,
+                child: StoreConnector<AppState, void Function(ProductModel product)>(
+                  converter: (store) => (product) => store.dispatch(AddProductToCart(product)),
+                  builder: (_, addProduct) {
+                    return StoreConnector<AppState, int>(
+                      converter: (store) => store.state.selectedQuantities[details.product.id] ?? 0,
+                      builder: (_, cartQuantity) {
+                        const successSnackBar = SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          duration: Duration(seconds: 1),
+                          margin: EdgeInsets.only(bottom: 50, left: 20, right: 20),
+                          content: Text('Product added to cart', textAlign: TextAlign.center),
+                        );
+
+                        const maxCapacitySnackBar = SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          duration: Duration(seconds: 1),
+                          margin: EdgeInsets.only(bottom: 50, left: 20, right: 20),
+                          content: Text('All available products were added to the cart', textAlign: TextAlign.center),
+                        );
+
+                        void showSnackBarMessage (bool success) {
+                          SnackBar snackBar = success
+                              ? successSnackBar
+                              : maxCapacitySnackBar;
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                        return Container(
+                          child: SimpleRoundedButton(
+                            fontSize: 18,
+                            text: 'Add to cart',
+                            onPressed: () => {
+                              if (cartQuantity < details.product.quantity) {
+                                addProduct(details.product),
+                                showSnackBarMessage(true)
+                              } else {
+                                showSnackBarMessage(false)
+                              }
+                            },
+                            height: 50,
+                          ),
+                    );
+                  });
                 })
               )
             ],

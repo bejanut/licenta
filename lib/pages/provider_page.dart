@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/model/provider_model.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import '../model/product_preview_model.dart';
 import '../state/AppState.dart';
 import '../widgets/stateful/product_preview.dart';
 import '../widgets/stateless/app_large_text.dart';
@@ -37,7 +36,7 @@ class ProviderPage extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.location_on),
-                          Text(provider.location),
+                          Text(provider.address),
                         ],
                       )
                     ],

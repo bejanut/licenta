@@ -3,7 +3,9 @@ import 'package:flutter_cubit/model/product_model.dart';
 class ProviderModel {
   String name;
   int id;
-  String location;
+  String address;
+  num lat;
+  num lon;
   int closingHours;
   List<ProductModel> products;
   bool isFavourite;
@@ -11,7 +13,9 @@ class ProviderModel {
   ProviderModel({
     required this.id,
     required this.name,
-    required this.location,
+    required this.address,
+    required this.lat,
+    required this.lon,
     required this.closingHours,
     required this.isFavourite,
     required this.products,
@@ -24,8 +28,10 @@ class ProviderModel {
     return ProviderModel(
       id: json["id"],
       name: json["name"],
-      location: json["location"],
-      closingHours: json["closingHours"],
+      lat: json["lat"],
+      lon: json["lon"],
+      address: json["address"],
+      closingHours: json["closeHour"],
       isFavourite: json["isFavourite"] == 'true',
       products: products,
     );

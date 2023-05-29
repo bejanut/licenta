@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cubit/model/product_model.dart';
 import 'package:flutter_cubit/model/provider_model.dart';
 
-import '../../model/product_preview_model.dart';
-
 class ProductPreview extends StatelessWidget {
   final ProductModel product;
   final ProviderModel provider;

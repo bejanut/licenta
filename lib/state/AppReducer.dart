@@ -2,6 +2,7 @@ import 'package:flutter_cubit/model/provider_model.dart';
 import 'package:flutter_cubit/state/actions/change-current-index.dart';
 import 'package:flutter_cubit/state/actions/open-product-page.dart';
 import 'package:flutter_cubit/state/actions/open-provider-page.dart';
+import 'package:flutter_cubit/state/actions/update_product_quantity.dart';
 
 import 'AppState.dart';
 import 'actions/add_product.dart';
@@ -58,7 +59,21 @@ AppState reducer(AppState state, dynamic action) {
 
     return newState;
   } else if (action is AddProductToCart) {
-    newState.cartProducts.add(action.product);
+    var quantity = newState.selectedQuantities[action.product.id] ?? 0;
+    if (quantity == 0) {
+      newState.cartProducts.add(action.product);
+    }
+
+    newState.selectedQuantities[action.product.id] = quantity + 1;
+
+    return newState;
+  } else if (action is UpdateProductQuantity) {
+    if (action.quantity <= 0) {
+      newState.selectedQuantities.remove(action.productId);
+      newState.cartProducts.removeWhere((p) => p.id == action.productId);
+    } else {
+      newState.selectedQuantities[action.productId] = action.quantity;
+    }
 
     return newState;
   } else {

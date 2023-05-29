@@ -18,9 +18,9 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   List images = [
-    "welcome-one.png",
-    "welcome-two.png",
-    "welcome-three.png",
+    "pizza.jpeg",
+    "field.jpeg",
+    "waste.jpeg",
   ];
   @override
   Widget build(BuildContext context) {
@@ -44,20 +44,19 @@ class _WelcomePageState extends State<WelcomePage> {
                 converter: (store) => () => store.dispatch(getInfo),
                 builder: (_, loadMainPage) {
                   return Container(
-                      margin: const EdgeInsets.only(top:150, left: 20, right: 20),
+                      margin: const EdgeInsets.only(top:170, left: 20, right: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppLargeText(text: "Trips",),
-                              AppText(text: "Mountain", size: 30,),
+                              AppLargeText(text: "Quick Food Deals",),
                               SizedBox(height: 20,),
                               Container(
                                 width: 250,
                                 child: AppText(
-                                    text: "Mountain hikes give you an incredible sense of freedom along with endurance test.",
+                                    text: "Eat at great prices and save the world",
                                     color: AppColors.textColor2),
                               ),
                               SizedBox(height: 20,),

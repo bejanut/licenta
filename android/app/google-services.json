@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1033268343411",
+    "project_id": "quickfooddeals",
+    "storage_bucket": "quickfooddeals.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033268343411:android:fecc2fbd6b8b678ce03006",
+        "android_client_info": {
+          "package_name": "com.example.flutter_cubit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033268343411-5n09kvn3dfmb33e4srk57hibpcibl9kp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfdv4R74w-iPMCqQKVTDadJgVXxr4o6Mg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033268343411-5n09kvn3dfmb33e4srk57hibpcibl9kp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

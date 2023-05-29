@@ -1,4 +1,5 @@
 class ProductModel {
+  String id;
   String name;
   String img;
   num oldPrice;
@@ -7,6 +8,7 @@ class ProductModel {
   num quantity;
 
   ProductModel({
+    required this.id,
     required this.name,
     required this.img,
     required this.oldPrice,
@@ -17,12 +19,13 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      name: json["name"],
-      img: json["img"],
-      oldPrice: json["oldPrice"],
+      id: json["productId"],
       newPrice: json["newPrice"],
+      oldPrice: json["oldPrice"],
+      name: json["name"],
       description: json["description"],
-      quantity: json["left"]
+      img: json["img"],
+      quantity: int.tryParse(json["quantity"])!
     );
   }
 

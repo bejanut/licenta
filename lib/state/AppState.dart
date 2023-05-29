@@ -1,5 +1,4 @@
 import '../model/product_model.dart';
-import '../model/product_preview_model.dart';
 import '../model/provider_model.dart';
 
 class AppState {
@@ -13,6 +12,7 @@ class AppState {
   ProductModel? selectedProduct;
   List<ProductModel> cartProducts = [];
   Map<int, ProviderModel> favouriteProviders = {};
+  Map<String, int> selectedQuantities = {};
 
   AppState(
       this.location,

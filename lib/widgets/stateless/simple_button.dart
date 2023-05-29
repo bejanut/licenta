@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cubit/misc/colors.dart';
 
 class SimpleRoundedButton extends StatelessWidget {
   final double fontSize;
@@ -21,6 +22,7 @@ class SimpleRoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton (
       style: ElevatedButton.styleFrom(
+          primary: AppColors.mainColor,
           minimumSize: Size(width, height),
           textStyle: TextStyle(
               fontSize: fontSize,
