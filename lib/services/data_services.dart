@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import '../model/provider_model.dart';
 
 class DataServices {
-  String baseUrl = "http://localhost:8090";
+  static const String baseUrl = "http://localhost:8092";
 
   static Future<List<ProviderModel>> getInfo() async {
-    const apiUrl = "http://localhost:8090/qfd/providers/deals";
+    const apiUrl = baseUrl + "/qfd/deals?providers=[]&status=available";
     http.Response res = await http.get(Uri.parse(apiUrl), headers: {
       "Access-Control-Allow-Origin": "*",
       'Content-Type': 'application/json',
