@@ -1,4 +1,4 @@
-import '../AppState.dart';
+import '../../AppState.dart';
 
 class ChangePageAction {
   final PageTypes _page_type;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/state/actions/change-user-page.dart';
+import 'package:flutter_cubit/state/actions/products_actions/change-user-page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../services/auth_services.dart';

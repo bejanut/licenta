@@ -1,4 +1,4 @@
-import '../../model/provider_model.dart';
+import '../../../model/provider_model.dart';
 
 class GetDataAction {
   final List<ProviderModel> _providers;

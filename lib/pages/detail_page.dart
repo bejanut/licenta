@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/model/product_model.dart';
-import 'package:flutter_cubit/state/actions/add_product.dart';
+import 'package:flutter_cubit/state/actions/products_actions/add_product.dart';
 import 'package:flutter_cubit/widgets/stateless/app_large_text.dart';
 import 'package:flutter_cubit/widgets/stateless/app_text.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -9,8 +9,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import '../misc/colors.dart';
 import '../model/provider_model.dart';
 import '../state/AppState.dart';
-import '../state/actions/change-page.dart';
-import '../state/actions/thunk-go-home.dart';
+import '../state/actions/products_actions/change-page.dart';
+import '../state/actions/products_actions/thunk-go-home.dart';
 import '../widgets/stateless/simple_button.dart';
 
 class DetailPage extends StatefulWidget {

@@ -5,8 +5,8 @@ import 'package:flutter_cubit/widgets/stateful/product_preview.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../state/AppState.dart';
-import '../../state/actions/open-product-page.dart';
-import '../../state/actions/toggle-provider-favaourite.dart';
+import '../../state/actions/products_actions/open-product-page.dart';
+import '../../state/actions/products_actions/toggle-provider-favaourite.dart';
 import '../stateless/moving_text.dart';
 
 class ProviderFavouriteItem extends StatefulWidget {

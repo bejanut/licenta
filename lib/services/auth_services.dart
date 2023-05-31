@@ -29,16 +29,21 @@ class AuthServices {
     const apiUrl = "http://localhost:8093/qfd/logIn";
 
     var hash = Hmac(sha256, utf8.encode(salt)).convert(utf8.encode(pass)).toString();
-    http.Response res = await http.post(Uri.parse(apiUrl), headers: headers,
-        body: jsonEncode(<String, String>{
-          'userName': userId,
-          'pass': hash
-        })
-    );
-    print("TOKEN" +  json.decode(res.body).toString());
+    try {
+      http.Response res = await http.post(Uri.parse(apiUrl), headers: headers,
+          body: jsonEncode(<String, String>{
+            'userName': userId,
+            'pass': hash
+          })
+      );
+      Map<String, dynamic> resBody = json.decode(res.body);
 
-    print("STATUS " + res.statusCode.toString());
+      print(res.statusCode);
 
-    return '';
+      return resBody["token"];
+    } catch (e) {
+      print(e);
+      return "";
+    }
   }
 }

@@ -1,4 +1,4 @@
-import '../../model/provider_model.dart';
+import '../../../model/provider_model.dart';
 
 class ToggleFavouriteStatus {
   final ProviderModel _provider;

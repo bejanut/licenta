@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import '../services/auth_services.dart';
 import '../state/AppState.dart';
-import '../state/actions/change-user-page.dart';
+import '../state/actions/products_actions/change-user-page.dart';
 import '../widgets/stateless/simple_button.dart';
 
 
@@ -19,9 +19,26 @@ class _LogInPageState extends State<LogInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void logIn () async {
+    print('Pressed ' + _emailController.text + ' ' + _passwordController.text);
+    String token = await AuthServices.logIn(_emailController.text, _passwordController.text);
+    var snack = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(seconds: 2),
+        margin: EdgeInsets.only(bottom: 100, left: 20, right: 20),
+        content: Text('Sign In Failed ' + token, textAlign: TextAlign.center));
+
+    ScaffoldMessenger.of(context).showSnackBar(snack);
+  }
+
   @override
   Widget build(BuildContext context) {
-    String token;
+    String token = "";
+
+    if (token.compareTo("") != 0) {
+      return const CircularProgressIndicator();
+    }
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,15 +90,7 @@ class _LogInPageState extends State<LogInPage> {
                     child: SimpleRoundedButton(
                       fontSize: 18,
                       text: 'Log In',
-                      onPressed: () async => {
-                        print('Pressed ' + _emailController.text + ' ' + _passwordController.text),
-                        token = await AuthServices.logIn(_emailController.text, _passwordController.text),
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            behavior: SnackBarBehavior.floating,
-                            duration: Duration(seconds: 2),
-                            margin: EdgeInsets.only(bottom: 100, left: 20, right: 20),
-                            content: Text('Sign In Successful ' + token, textAlign: TextAlign.center)))
-                      },
+                      onPressed: logIn,
                       height: 50,
                     )
                 ),

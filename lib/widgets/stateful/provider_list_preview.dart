@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/model/provider_model.dart';
-import 'package:flutter_cubit/state/actions/open-provider-page.dart';
-import 'package:flutter_cubit/state/actions/toggle-provider-favaourite.dart';
+import 'package:flutter_cubit/state/actions/products_actions/open-provider-page.dart';
+import 'package:flutter_cubit/state/actions/products_actions/toggle-provider-favaourite.dart';
 import 'package:flutter_cubit/widgets/stateful/product_preview.dart';
 import 'package:flutter_cubit/widgets/stateful/toggle_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../state/AppState.dart';
-import '../../state/actions/open-product-page.dart';
+import '../../state/actions/products_actions/open-product-page.dart';
 import '../stateless/moving_text.dart';
 
 class ProviderPreviewList extends StatefulWidget {

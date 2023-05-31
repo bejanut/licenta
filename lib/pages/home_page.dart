@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cubit/state/actions/change-page.dart';
+import 'package:flutter_cubit/state/actions/products_actions/change-page.dart';
 import 'package:flutter_cubit/widgets/stateless/app_large_text.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../model/provider_model.dart';
 import '../state/AppState.dart';
-import '../state/actions/thunk-get-info.dart';
+import '../state/actions/products_actions/thunk-get-info.dart';
 import '../widgets/stateful/provider_list_preview.dart';
 
 class HomePage extends StatefulWidget {

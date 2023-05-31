@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cubit/pages/favourite_page.dart';
 import 'package:flutter_cubit/pages/home_page.dart';
 import 'package:flutter_cubit/pages/navpages/search_page.dart';
-import 'package:flutter_cubit/state/actions/change-current-index.dart';
+import 'package:flutter_cubit/state/actions/products_actions/change-current-index.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../state/AppState.dart';

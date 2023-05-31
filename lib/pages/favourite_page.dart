@@ -5,7 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import '../model/provider_model.dart';
 import '../state/AppState.dart';
-import '../state/actions/change-page.dart';
+import '../state/actions/products_actions/change-page.dart';
 import '../widgets/stateful/provider_favorite_item.dart';
 
 class FavouritePage extends StatefulWidget {

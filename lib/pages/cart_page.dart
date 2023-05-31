@@ -5,8 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import '../misc/colors.dart';
 import '../model/product_model.dart';
 import '../state/AppState.dart';
-import '../state/actions/thunk-go-home.dart';
-import '../state/actions/update_product_quantity.dart';
+import '../state/actions/products_actions/thunk-go-home.dart';
+import '../state/actions/products_actions/update_product_quantity.dart';
 import '../widgets/stateless/app_buttons.dart';
 import '../widgets/stateless/simple_button.dart';
 

@@ -6,7 +6,7 @@ import 'package:flutter_cubit/widgets/stateless/responsive_button.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../state/AppState.dart';
-import '../state/actions/thunk-get-info.dart';
+import '../state/actions/products_actions/thunk-get-info.dart';
 import '../widgets/stateless/app_text.dart';
 
 class WelcomePage extends StatefulWidget {
