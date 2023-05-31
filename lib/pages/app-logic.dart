@@ -22,7 +22,7 @@ class _AppLogicState extends State<AppLogic> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StoreConnector<AppState, PageTypes>(
-        converter: (store) => store.state.page_type,
+        converter: (store) => store.state.productsState.page_type,
         builder: (_, type) {
           switch (type) {
             case PageTypes.welcomePage:

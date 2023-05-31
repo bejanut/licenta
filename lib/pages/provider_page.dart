@@ -12,7 +12,7 @@ class ProviderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: StoreConnector<AppState, ProviderModel>(
-        converter: (store) => store.state.selectedProvider!,
+        converter: (store) => store.state.productsState.selectedProvider!,
         builder: (_, provider) {
       return Scaffold(
         body: CustomScrollView(

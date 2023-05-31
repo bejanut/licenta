@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cubit/state/actions/change-user-page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import '../services/auth_services.dart';
 import '../state/AppState.dart';
 import '../widgets/stateless/simple_button.dart';
 
@@ -71,10 +72,16 @@ class _SignupPageState extends State<SignupPage> {
                       child: SimpleRoundedButton(
                         fontSize: 18,
                         text: 'Sign Up',
-                        onPressed: () =>
+                        onPressed: () async =>
                         {
                           print('Pressed ' + _emailController.text + ' ' +
-                              _passwordController.text)
+                              _passwordController.text),
+                          await AuthServices.createAccount(_emailController.text, _passwordController.text),
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            duration: Duration(seconds: 2),
+                            margin: EdgeInsets.only(bottom: 100, left: 20, right: 20),
+                            content: Text('Sign Up Successful', textAlign: TextAlign.center)))
                         },
                         height: 50,
                       )

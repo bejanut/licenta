@@ -25,10 +25,10 @@ class _CartPageState extends State<CartPage> with TickerProviderStateMixin {
         converter: (store) => (int q, String p) => store.dispatch(UpdateProductQuantity(q, p)),
         builder: (_, updateQuantity) {
           return StoreConnector<AppState, Map<String, int>>(
-              converter: (store) => store.state.selectedQuantities,
+              converter: (store) => store.state.productsState.selectedQuantities,
               builder: (_, quantities) {
                 return StoreConnector<AppState, List<ProductModel>>(
-                    converter: (store) => store.state.cartProducts,
+                    converter: (store) => store.state.productsState.cartProducts,
                     builder: (_, products) {
                       var totalCost = products.fold<num>(0, (prev, prod) => prev + prod.newPrice * quantities[prod.id]!);;
 

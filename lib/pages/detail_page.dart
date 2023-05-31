@@ -31,7 +31,10 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, DetailState>(
-        converter: (store) => DetailState(store.state.selectedProduct!, store.state.selectedProvider!),
+        converter: (store) => DetailState(
+            store.state.productsState.selectedProduct!,
+            store.state.productsState.selectedProvider!
+        ),
         builder: (_, details) {
       return Scaffold(
         body: Container(
@@ -172,7 +175,7 @@ class _DetailPageState extends State<DetailPage> {
                   converter: (store) => (product) => store.dispatch(AddProductToCart(product)),
                   builder: (_, addProduct) {
                     return StoreConnector<AppState, int>(
-                      converter: (store) => store.state.selectedQuantities[details.product.id] ?? 0,
+                      converter: (store) => store.state.productsState.selectedQuantities[details.product.id] ?? 0,
                       builder: (_, cartQuantity) {
                         const successSnackBar = SnackBar(
                           behavior: SnackBarBehavior.floating,

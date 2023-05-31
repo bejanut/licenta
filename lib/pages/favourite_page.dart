@@ -50,7 +50,7 @@ class _FavouritePageState extends State<FavouritePage> with TickerProviderStateM
                 ),
                 SizedBox(height: 20),
                 StoreConnector<AppState, List<ProviderModel>>(
-                  converter: (store) => store.state.favouriteProviders.values.toList(),
+                  converter: (store) => store.state.productsState.favouriteProviders.values.toList(),
                   builder: (_, providers) {
                     return Expanded(
                       child: ClipRRect(

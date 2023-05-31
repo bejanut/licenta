@@ -33,7 +33,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, int>(
-      converter: (store) => store.state.navigationBarIndex,
+      converter: (store) => store.state.productsState.navigationBarIndex,
       builder: (_, index) {
         return StoreConnector<AppState, void Function(int index)>(
         converter: (store) => (int index) => store.dispatch(ChangeCurrentIndex(index)),

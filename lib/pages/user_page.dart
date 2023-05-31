@@ -16,7 +16,7 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, UserPageStates>(
-        converter: (store) => store.state.userPage,
+        converter: (store) => store.state.productsState.userPage,
         builder: (_, type) {
           switch (type) {
             case UserPageStates.logIn:

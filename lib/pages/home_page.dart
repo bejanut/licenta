@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import '../model/provider_model.dart';
 import '../state/AppState.dart';
+import '../state/actions/thunk-get-info.dart';
 import '../widgets/stateful/provider_list_preview.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,28 +45,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     );
                 }),
                 SizedBox(height: 20),
-                StoreConnector<AppState, List<ProviderModel>>(
-                  converter: (store) => store.state.providers,
-                  builder: (_, providers) {
-                    return Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child: SizedBox(
-                            height: double.maxFinite,//based on your need
-                            width: double.maxFinite,
-                            child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: providers.length,
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ProviderPreviewList(provider: providers[index]);
-                                }
-                            )
+                StoreConnector<AppState, DispatchFunc>(
+                converter: (store) => () => store.dispatch(getInfo),
+                builder: (_, loadMainPage) {
+                  return StoreConnector<AppState, List<ProviderModel>>(
+                    converter: (store) => store.state.productsState.providers,
+                    builder: (_, providers) {
+                      return Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: SizedBox(
+                              height: double.maxFinite,//based on your need
+                              width: double.maxFinite,
+                              child: RefreshIndicator (
+                                onRefresh: () => Future(() => loadMainPage()),
+                                child: ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    itemCount: providers.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (BuildContext context, int index) {
+                                      return ProviderPreviewList(provider: providers[index]);
+                                    }
+                                ),
+                              )
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                ),
+                      );
+                    }
+                  );
+                }),
               ],
             )
     );
