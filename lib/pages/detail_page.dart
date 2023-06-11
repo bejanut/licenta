@@ -5,9 +5,11 @@ import 'package:flutter_cubit/state/actions/products_actions/add_product.dart';
 import 'package:flutter_cubit/widgets/stateless/app_large_text.dart';
 import 'package:flutter_cubit/widgets/stateless/app_text.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 import '../misc/colors.dart';
 import '../model/provider_model.dart';
+import '../services/map_loader.dart';
 import '../state/AppState.dart';
 import '../state/actions/products_actions/change-page.dart';
 import '../state/actions/products_actions/thunk-go-home.dart';
@@ -118,12 +120,18 @@ class _DetailPageState extends State<DetailPage> {
                             ]
                         ),
                         SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Icon(Icons.location_on, color: AppColors.mainColor),
-                            SizedBox(width: 5),
-                            AppText(text: details.provider.address, color: AppColors.textColor1)
-                          ],),
+                        GestureDetector(
+                          onTap: () => MapLoader.openMaps(
+                              context,
+                              details.provider.name,
+                              new Coords(details.provider.lat.toDouble(), details.provider.lon.toDouble())),
+                          child: Row(
+                            children: [
+                              Icon(Icons.location_on, color: AppColors.mainColor),
+                              SizedBox(width: 5),
+                              AppText(text: details.provider.address, color: AppColors.textColor1)
+                            ],),
+                        ),
                         SizedBox(height: 25),
                         AppLargeText(text: "Availability", color: Colors.black.withOpacity(0.8), size: 20),
                         SizedBox(height: 10),

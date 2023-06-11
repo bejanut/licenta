@@ -31,11 +31,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       padding: const EdgeInsets.only(top: 60, left: 20, right: 20),
                       child: Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.menu, size: 30, color: Colors.black54),
-                            onPressed: goToCart,
-                          ),
-                          Expanded(child: Center(child: AppLargeText(text: "Current Offers"))),
+                          Expanded(child: AppLargeText(text: "Current Offers")),
                           IconButton(
                             icon: const Icon(Icons.shopping_cart, size: 30, color: Colors.black54),
                             onPressed: goToCart,

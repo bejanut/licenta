@@ -35,7 +35,6 @@ class _ProviderPreviewListState extends State<ProviderPreviewList> {
               return Container(
             child: InkWell(
               onTap: () => {
-                print('Clicked Provider'),
                 openProviderPage(provider)
               },
               child: Container(

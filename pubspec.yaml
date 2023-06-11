@@ -48,6 +48,7 @@ dependencies:
   firebase_core:
   firebase_storage:
   crypto: 3.0.2
+  map_launcher: 2.5.0+1
 
 dev_dependencies:
   flutter_test:

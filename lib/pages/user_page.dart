@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_cubit/pages/logged_page.dart';
 import 'package:flutter_cubit/pages/signin.dart';
 import 'package:flutter_cubit/pages/signup.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -24,7 +25,7 @@ class _UserPageState extends State<UserPage> {
             case UserPageStates.register:
               return const SignupPage();
             case UserPageStates.loggedIn:
-              return Container();
+              return const LoggedPage();
           }
         },
       );

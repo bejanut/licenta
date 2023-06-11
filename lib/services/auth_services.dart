@@ -13,7 +13,7 @@ class AuthServices {
   };
 
   static Future<void> createAccount(String userId, String pass) async {
-    const apiUrl = "http://localhost:8093/qfd/createAccount";
+    const apiUrl = baseUrl + "/qfd/createAccount";
 
     var hash = Hmac(sha256, utf8.encode(salt)).convert(utf8.encode(pass)).toString();
     http.Response res = await http.post(Uri.parse(apiUrl), headers: headers,
@@ -26,7 +26,7 @@ class AuthServices {
   }
 
   static Future<String> logIn(String userId, String pass) async {
-    const apiUrl = "http://localhost:8093/qfd/logIn";
+    const apiUrl = baseUrl + "/qfd/logIn";
 
     var hash = Hmac(sha256, utf8.encode(salt)).convert(utf8.encode(pass)).toString();
     try {
@@ -44,6 +44,26 @@ class AuthServices {
     } catch (e) {
       print(e);
       return "";
+    }
+  }
+
+  static Future<Map<String, dynamic>> getData(String token) async {
+    var apiUrl = baseUrl + "/qfd/userData?token=" + token;
+
+    try {
+      http.Response res = await http.get(Uri.parse(apiUrl), headers: headers);
+      Map<String, dynamic> resBody = json.decode(res.body);
+
+      print(res.statusCode);
+      print(resBody["providerInfo"]);
+
+      return resBody;
+    } catch (e) {
+      print(e);
+      Map<String, dynamic> errorMap = new Map<String, dynamic>();
+      errorMap["error"] = e;
+
+      return errorMap;
     }
   }
 }
